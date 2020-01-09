@@ -32,7 +32,7 @@ namespace Repli
 
         private void Frm(object sender, EventArgs e)
         {
-            LoadListFolder();
+            LoadListFolder();                        
         }
 
         private void BtnCopy_Click(object sender, EventArgs e)
