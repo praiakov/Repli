@@ -11,7 +11,7 @@ namespace Repli.Util
         public static class Items
         {
             public const string Path = @"c:\repli";
-            public const string File = @"server.txt";
+            public const string File = @"server.db";
         }
     }
 }

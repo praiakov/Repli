@@ -1,13 +1,9 @@
-﻿using Repli.Util;
+﻿using LiteDB;
+using Repli.Util;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Repli
@@ -85,30 +81,32 @@ namespace Repli
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             {
+                if (!Directory.Exists(PathUtil.Items.Path))
+                {
+                    var dir = Directory.CreateDirectory(PathUtil.Items.Path);
+                    dir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+                }
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    var path = dialog.SelectedPath;
 
-                    var pathFile = Path.Combine(PathUtil.Items.Path, Util.PathUtil.Items.File);
-
-                    if (!Directory.Exists(PathUtil.Items.Path))
+                    using (var db = new LiteDatabase(@"C:\repli\database.db"))
                     {
-                        var dir = Directory.CreateDirectory(PathUtil.Items.Path);
-                        dir.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
-                    }
+                        var col = db.GetCollection<Server>("servers");
 
-                    if (!File.Exists(PathUtil.Items.Path))
-                    {
-                        using (StreamWriter sw = File.AppendText(pathFile))
+                        var server = new Server()
                         {
-                            sw.WriteLine(path);
-                            MessageBox.Show("Adicionado com sucesso");
-                        }
-                    }
+                            Path = dialog.SelectedPath
+                        };
 
-                    clbServer.Items.Clear();
-                    LoadListFolder();
+                        col.Insert(server);
+
+                        MessageBox.Show("Adicionado com sucesso");
+
+                        clbServer.Items.Clear();
+
+                        LoadListFolder();
+                    }                                       
                 }
             }
         }
@@ -117,15 +115,14 @@ namespace Repli
         {
             if (Directory.Exists(PathUtil.Items.Path))
             {
-                using (StreamReader stRead = new StreamReader(PathUtil.Items.Path + @"\" + PathUtil.Items.File))
+                using (var db = new LiteDatabase(@"C:\repli\database.db"))
                 {
-                    while (!stRead.EndOfStream)
+                    var col = db.GetCollection<Server>("servers");
+                    var serves = col.Find(Query.All());
+                                        
+                    for (int i = 0; i < serves.Count(); i++)
                     {
-                        clbServer.Items.Add(Convert.ToString(stRead.ReadLine()));
-                    }
-
-                    for (int i = 0; i < clbServer.Items.Count; i++)
-                    {
+                        clbServer.Items.Add(serves.ElementAt(i).Path);
                         clbServer.SetItemChecked(i, true);
                     }
                 }
@@ -134,37 +131,23 @@ namespace Repli
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            string tempFile = Path.GetTempFileName();
-            string removedPath = "";
 
-            for (int i = 0; i < clbServer.Items.Count; i++)
+            using (var db = new LiteDatabase(@"C:\repli\database.db"))
             {
-                if (clbServer.GetSelected(i))
-                {
-                    removedPath = clbServer.Text;
-                }
+                string itemSelected = clbServer.Text;
+                
+                var col = db.GetCollection<Server>("servers");
+
+                var row = col.FindOne(Query.Contains("Path", itemSelected));
+                
+                col.Delete(row.Id);
+
+                MessageBox.Show("Deletado com sucesso!");
+
+                clbServer.Items.Clear();
+
+                LoadListFolder();
             }
-
-            using (var sr = new StreamReader(PathUtil.Items.Path + @"\" + PathUtil.Items.File))
-            using (var sw = new StreamWriter(tempFile))
-            {
-                string line;
-
-                while ((line = sr.ReadLine()) != null)
-                {
-                    if (line != removedPath)
-                        sw.WriteLine(line);
-                }
-            }
-
-            var pathFile = Path.Combine(PathUtil.Items.Path, Util.PathUtil.Items.File);
-
-            File.Delete(pathFile);
-            File.Move(tempFile, pathFile);
-            MessageBox.Show("Deletado com sucesso");
-
-            clbServer.Items.Clear();
-            LoadListFolder();
         }
     }
 }
