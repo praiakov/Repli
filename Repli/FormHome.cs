@@ -49,6 +49,19 @@ namespace Repli
                             if (File.Exists(pathDest + @"\" + item))
                             {
                                 File.Copy(pathFrom + @"\" + item, pathDest + item, true);
+
+                                using (var db = new LiteDatabase(@"C:\repli\database.db"))
+                                {
+                                    var col = db.GetCollection<Logs>("logs");
+
+                                    var log = new Logs()
+                                    {
+                                        Path = pathFrom + @"\" + item,
+                                        Data = DateTime.Now
+                                    };
+
+                                    col.Insert(log);
+                                }
                             }
                         }
                     }
@@ -63,7 +76,6 @@ namespace Repli
             }
         }
 
-        // Return all subdirectories and files
         private List<string> GetSubDirectoriesAndFiles(string pathFrom)
         {
             string[] subdirectoryEntries = Directory.GetFiles(pathFrom, "*.*", SearchOption.AllDirectories);
