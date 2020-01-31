@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHome));
             this.btnConfig = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -38,6 +39,9 @@
             this.fbdFromFile = new System.Windows.Forms.FolderBrowserDialog();
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.lbBar = new System.Windows.Forms.Label();
+            this.timerBar = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnConfig
@@ -116,12 +120,34 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(24, 302);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(477, 23);
+            this.progressBar.TabIndex = 12;
+            // 
+            // lbBar
+            // 
+            this.lbBar.AutoSize = true;
+            this.lbBar.Location = new System.Drawing.Point(21, 330);
+            this.lbBar.Name = "lbBar";
+            this.lbBar.Size = new System.Drawing.Size(21, 13);
+            this.lbBar.TabIndex = 13;
+            this.lbBar.Text = "0%";
+            // 
+            // timerBar
+            // 
+            this.timerBar.Tick += new System.EventHandler(this.timerBar_Tick);
+            // 
             // frmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(537, 316);
+            this.ClientSize = new System.Drawing.Size(533, 352);
+            this.Controls.Add(this.lbBar);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.clbServer);
@@ -152,6 +178,9 @@
         private System.Windows.Forms.FolderBrowserDialog fbdFromFile;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label lbBar;
+        private System.Windows.Forms.Timer timerBar;
     }
 }
 

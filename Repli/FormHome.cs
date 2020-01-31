@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Repli
@@ -28,7 +29,7 @@ namespace Repli
 
         private void Frm(object sender, EventArgs e)
         {
-            LoadListFolder();                        
+            LoadListFolder();
         }
 
         private void BtnCopy_Click(object sender, EventArgs e)
@@ -63,12 +64,12 @@ namespace Repli
                                     col.Insert(log);
                                 }
                             }
+
+                            timerBar.Start();
+
                         }
                     }
                 }
-
-                MessageBox.Show("Transferência realizada com sucesso");
-
             }
             else
             {
@@ -118,7 +119,7 @@ namespace Repli
                         clbServer.Items.Clear();
 
                         LoadListFolder();
-                    }                                       
+                    }
                 }
             }
         }
@@ -131,7 +132,7 @@ namespace Repli
                 {
                     var col = db.GetCollection<Server>("servers");
                     var serves = col.Find(Query.All());
-                                        
+
                     for (int i = 0; i < serves.Count(); i++)
                     {
                         clbServer.Items.Add(serves.ElementAt(i).Path);
@@ -147,11 +148,11 @@ namespace Repli
             using (var db = new LiteDatabase(@"C:\repli\database.db"))
             {
                 string itemSelected = clbServer.Text;
-                
+
                 var col = db.GetCollection<Server>("servers");
 
                 var row = col.FindOne(Query.Contains("Path", itemSelected));
-                
+
                 col.Delete(row.Id);
 
                 MessageBox.Show("Deletado com sucesso!");
@@ -159,6 +160,23 @@ namespace Repli
                 clbServer.Items.Clear();
 
                 LoadListFolder();
+            }
+        }
+
+        private void timerBar_Tick(object sender, EventArgs e)
+        {
+            int i = 25;
+            progressBar.Increment(10 + i);
+            lbBar.Text = progressBar.Value.ToString() + "%";
+
+            if (lbBar.Text.Contains("100"))
+            {
+                timerBar.Stop();
+                Thread.Sleep(10);
+                MessageBox.Show("Copiado com sucesso!");
+
+                progressBar.Value = 0;
+                lbBar.Text = "0%";
             }
         }
     }
