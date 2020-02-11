@@ -1,17 +1,16 @@
 # Repli
-Transferência de arquivos de determinada pasta para múltiplas pastas de mesma estrutura
+Files transfer to multiple folders of same struct
 
 ![Repli](https://github.com/praiakov/repli/blob/master/repli.PNG)
 
-## Pré-requisito
-
-Instale via NuGet:
+## Getting Started
+#### Prerequisites
 
 ```
 Install-Package LiteDB
 ```
 
-## Exemplo de Pasta
+## Folder struct example
 
 ```
 C:\repli\repli.txt
