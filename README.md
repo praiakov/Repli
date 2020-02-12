@@ -9,6 +9,7 @@ Files transfer to multiple folders of same struct
 ```
 Install-Package LiteDB
 ```
+Obs: To view the data use [LiteDB.Studio](https://github.com/mbdavid/LiteDB.Studio)
 
 ## Folder struct example
 
