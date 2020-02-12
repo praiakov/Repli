@@ -51,7 +51,7 @@ namespace Repli
                             {
                                 File.Copy(pathFrom + @"\" + item, pathDest + item, true);
 
-                                using (var db = new LiteDatabase(@"C:\repli\database.db"))
+                                using (var db = new LiteDatabase(PathUtil.Items.DataBase))
                                 {
                                     var col = db.GetCollection<Logs>("logs");
 
@@ -103,7 +103,7 @@ namespace Repli
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
 
-                    using (var db = new LiteDatabase(@"C:\repli\database.db"))
+                    using (var db = new LiteDatabase(PathUtil.Items.DataBase))
                     {
                         var col = db.GetCollection<Server>("servers");
 
@@ -128,7 +128,7 @@ namespace Repli
         {
             if (Directory.Exists(PathUtil.Items.Path))
             {
-                using (var db = new LiteDatabase(@"C:\repli\database.db"))
+                using (var db = new LiteDatabase(PathUtil.Items.DataBase))
                 {
                     var col = db.GetCollection<Server>("servers");
                     var serves = col.Find(Query.All());
@@ -145,7 +145,7 @@ namespace Repli
         private void btnDelete_Click(object sender, EventArgs e)
         {
 
-            using (var db = new LiteDatabase(@"C:\repli\database.db"))
+            using (var db = new LiteDatabase(PathUtil.Items.DataBase))
             {
                 string itemSelected = clbServer.Text;
 
