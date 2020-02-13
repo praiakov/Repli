@@ -57,7 +57,7 @@ namespace Repli
 
                                     var log = new Logs()
                                     {
-                                        Path = pathFrom + @"\" + item,
+                                        Path = pathFrom + item,
                                         Data = DateTime.Now
                                     };
 
@@ -178,6 +178,12 @@ namespace Repli
                 progressBar.Value = 0;
                 lbBar.Text = "0%";
             }
+        }
+
+        private void btnLogs_Click(object sender, EventArgs e)
+        {
+            Form frmLogs = new FormLogs();
+            frmLogs.ShowDialog();
         }
     }
 }

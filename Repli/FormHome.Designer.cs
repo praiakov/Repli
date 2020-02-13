@@ -42,6 +42,7 @@
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.lbBar = new System.Windows.Forms.Label();
             this.timerBar = new System.Windows.Forms.Timer(this.components);
+            this.btnLogs = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConfig
@@ -140,12 +141,23 @@
             // 
             this.timerBar.Tick += new System.EventHandler(this.timerBar_Tick);
             // 
+            // btnLogs
+            // 
+            this.btnLogs.Location = new System.Drawing.Point(378, 236);
+            this.btnLogs.Name = "btnLogs";
+            this.btnLogs.Size = new System.Drawing.Size(123, 23);
+            this.btnLogs.TabIndex = 14;
+            this.btnLogs.Text = "Ver logs";
+            this.btnLogs.UseVisualStyleBackColor = true;
+            this.btnLogs.Click += new System.EventHandler(this.btnLogs_Click);
+            // 
             // frmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(533, 352);
+            this.Controls.Add(this.btnLogs);
             this.Controls.Add(this.lbBar);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnDelete);
@@ -181,6 +193,7 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label lbBar;
         private System.Windows.Forms.Timer timerBar;
+        private System.Windows.Forms.Button btnLogs;
     }
 }
 
