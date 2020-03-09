@@ -13,5 +13,7 @@ namespace Repli.Util
         public string Path { get; set; }
 
         public DateTime Data { get; set; }
+
+        public string Hostname { get; set; }
     }
 }

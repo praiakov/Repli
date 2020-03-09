@@ -58,7 +58,8 @@ namespace Repli
                                     var log = new Logs()
                                     {
                                         Path = pathFrom + item,
-                                        Data = DateTime.Now
+                                        Data = DateTime.Now,
+                                        Hostname = Environment.MachineName
                                     };
 
                                     col.Insert(log);

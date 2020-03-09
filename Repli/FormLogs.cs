@@ -31,7 +31,7 @@ namespace Repli
 
                 foreach (var item in logs)
                 {
-                    listLogs.Add(item.Data + " " + item.Path);
+                    listLogs.Add(item.Hostname + " " + item.Data + " " + item.Path);
                 }
 
                 for (int i = 0; i < listLogs.Count; i++)
