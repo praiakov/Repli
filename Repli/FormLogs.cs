@@ -21,8 +21,8 @@ namespace Repli
 
         private void FormLogs_Load(object sender, EventArgs e)
         {
-            using (var db = new LiteDatabase(PathUtil.Items.DataBase))
-            {
+            using var db = new LiteDatabase(PathUtil.Items.DataBase);
+            
                 List<string> listLogs = new List<string>();
 
                 var col = db.GetCollection<Logs>("logs");
@@ -38,7 +38,6 @@ namespace Repli
                 {
                     txtLogs.Text = string.Join(",", listLogs[i] + Environment.NewLine + txtLogs.Text);
                 }
-            }
         }
     }
 }

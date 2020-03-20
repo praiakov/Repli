@@ -18,6 +18,8 @@ namespace Repli
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            FolderBrowserDialog fbdFromFile = new FolderBrowserDialog();
+
             fbdFromFile.Description = "Selecione pasta de origem";
             fbdFromFile.RootFolder = Environment.SpecialFolder.MyComputer;
             fbdFromFile.ShowNewFolderButton = true;
@@ -51,8 +53,8 @@ namespace Repli
                             {
                                 File.Copy(pathFrom + @"\" + item, pathDest + item, true);
 
-                                using (var db = new LiteDatabase(PathUtil.Items.DataBase))
-                                {
+                                using var db = new LiteDatabase(PathUtil.Items.DataBase);
+                                
                                     var col = db.GetCollection<Logs>("logs");
 
                                     var log = new Logs()
@@ -63,7 +65,7 @@ namespace Repli
                                     };
 
                                     col.Insert(log);
-                                }
+                                
                             }
 
                             timerBar.Start();
@@ -104,8 +106,8 @@ namespace Repli
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
 
-                    using (var db = new LiteDatabase(PathUtil.Items.DataBase))
-                    {
+                    using var db = new LiteDatabase(PathUtil.Items.DataBase);
+
                         var col = db.GetCollection<Server>("servers");
 
                         var server = new Server()
@@ -120,7 +122,6 @@ namespace Repli
                         clbServer.Items.Clear();
 
                         LoadListFolder();
-                    }
                 }
             }
         }
@@ -129,8 +130,8 @@ namespace Repli
         {
             if (Directory.Exists(PathUtil.Items.Path))
             {
-                using (var db = new LiteDatabase(PathUtil.Items.DataBase))
-                {
+                using var db = new LiteDatabase(PathUtil.Items.DataBase);
+                
                     var col = db.GetCollection<Server>("servers");
                     var serves = col.Find(Query.All());
 
@@ -139,15 +140,14 @@ namespace Repli
                         clbServer.Items.Add(serves.ElementAt(i).Path);
                         clbServer.SetItemChecked(i, true);
                     }
-                }
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
 
-            using (var db = new LiteDatabase(PathUtil.Items.DataBase))
-            {
+            using var db = new LiteDatabase(PathUtil.Items.DataBase);
+            
                 string itemSelected = clbServer.Text;
 
                 var col = db.GetCollection<Server>("servers");
@@ -161,7 +161,6 @@ namespace Repli
                 clbServer.Items.Clear();
 
                 LoadListFolder();
-            }
         }
 
         private void timerBar_Tick(object sender, EventArgs e)
