@@ -54,18 +54,18 @@ namespace Repli
                                 File.Copy(pathFrom + @"\" + item, pathDest + item, true);
 
                                 using var db = new LiteDatabase(PathUtil.Items.DataBase);
-                                
-                                    var col = db.GetCollection<Logs>("logs");
 
-                                    var log = new Logs()
-                                    {
-                                        Path = pathFrom + item,
-                                        Data = DateTime.Now,
-                                        Hostname = Environment.MachineName
-                                    };
+                                var col = db.GetCollection<Logs>("logs");
 
-                                    col.Insert(log);
-                                
+                                var log = new Logs()
+                                {
+                                    Path = pathFrom + item,
+                                    Data = DateTime.Now,
+                                    Hostname = Environment.MachineName
+                                };
+
+                                col.Insert(log);
+
                             }
 
                             timerBar.Start();
@@ -108,20 +108,20 @@ namespace Repli
 
                     using var db = new LiteDatabase(PathUtil.Items.DataBase);
 
-                        var col = db.GetCollection<Server>("servers");
+                    var col = db.GetCollection<Server>("servers");
 
-                        var server = new Server()
-                        {
-                            Path = dialog.SelectedPath
-                        };
+                    var server = new Server()
+                    {
+                        Path = dialog.SelectedPath
+                    };
 
-                        col.Insert(server);
+                    col.Insert(server);
 
-                        MessageBox.Show("Adicionado com sucesso");
+                    MessageBox.Show("Adicionado com sucesso");
 
-                        clbServer.Items.Clear();
+                    clbServer.Items.Clear();
 
-                        LoadListFolder();
+                    LoadListFolder();
                 }
             }
         }
@@ -131,15 +131,15 @@ namespace Repli
             if (Directory.Exists(PathUtil.Items.Path))
             {
                 using var db = new LiteDatabase(PathUtil.Items.DataBase);
-                
-                    var col = db.GetCollection<Server>("servers");
-                    var serves = col.Find(Query.All());
 
-                    for (int i = 0; i < serves.Count(); i++)
-                    {
-                        clbServer.Items.Add(serves.ElementAt(i).Path);
-                        clbServer.SetItemChecked(i, true);
-                    }
+                var col = db.GetCollection<Server>("servers");
+                var serves = col.Find(Query.All());
+
+                for (int i = 0; i < serves.Count(); i++)
+                {
+                    clbServer.Items.Add(serves.ElementAt(i).Path);
+                    clbServer.SetItemChecked(i, true);
+                }
             }
         }
 
@@ -147,9 +147,11 @@ namespace Repli
         {
 
             using var db = new LiteDatabase(PathUtil.Items.DataBase);
-            
-                string itemSelected = clbServer.Text;
 
+            string itemSelected = clbServer.Text;
+
+            if (!string.IsNullOrEmpty(itemSelected))
+            {
                 var col = db.GetCollection<Server>("servers");
 
                 var row = col.FindOne(Query.Contains("Path", itemSelected));
@@ -161,6 +163,9 @@ namespace Repli
                 clbServer.Items.Clear();
 
                 LoadListFolder();
+            }
+
+            MessageBox.Show("Selecione uma pasta!");
         }
 
         private void timerBar_Tick(object sender, EventArgs e)

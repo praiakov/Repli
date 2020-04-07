@@ -7,7 +7,7 @@ Files transfer to multiple folders of same struct
 #### Prerequisites
 
 * .NET Core 3.1
-* LiteDB 5.0.4
+* LiteDB 4.1.4
 
 #### Running Project
 ```
