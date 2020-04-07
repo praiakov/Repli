@@ -198,7 +198,6 @@
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckedListBox clbServer;
-        private System.Windows.Forms.FolderBrowserDialog fbdFromFile;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ProgressBar progressBar;
