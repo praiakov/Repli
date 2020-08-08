@@ -34,10 +34,12 @@
             // 
             // txtLogs
             // 
+            this.txtLogs.Enabled = false;
             this.txtLogs.Location = new System.Drawing.Point(41, 46);
             this.txtLogs.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtLogs.Multiline = true;
             this.txtLogs.Name = "txtLogs";
+            this.txtLogs.ReadOnly = true;
             this.txtLogs.Size = new System.Drawing.Size(601, 338);
             this.txtLogs.TabIndex = 0;
             // 
@@ -47,11 +49,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 446);
             this.Controls.Add(this.txtLogs);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
             this.Name = "FormLogs";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Repli";
-            this.Load += new System.EventHandler(this.FormLogs_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

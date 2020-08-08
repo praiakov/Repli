@@ -38,40 +38,47 @@ namespace Repli
         {
             if (!"".Equals(txtPath.Text))
             {
-                for (int i = 0; i < clbServer.Items.Count; i++)
+                if (clbServer.Items.Count > 0)
                 {
-                    if (clbServer.GetItemChecked(i))
+                    for (int i = 0; i < clbServer.Items.Count; i++)
                     {
-                        string pathFrom = (string)txtPath.Text;
-                        string pathDest = (string)clbServer.Items[i];
-
-                        var subDirectories = GetSubDirectoriesAndFiles(pathFrom);
-
-                        foreach (var item in subDirectories)
+                        if (clbServer.GetItemChecked(i))
                         {
-                            if (File.Exists(pathDest + @"\" + item))
+                            string pathFrom = (string)txtPath.Text;
+                            string pathDest = (string)clbServer.Items[i];
+
+                            var subDirectories = GetSubDirectoriesAndFiles(pathFrom);
+
+                            foreach (var item in subDirectories)
                             {
-                                File.Copy(pathFrom + @"\" + item, pathDest + item, true);
-
-                                using var db = new LiteDatabase(PathUtil.Items.DataBase);
-
-                                var col = db.GetCollection<Logs>("logs");
-
-                                var log = new Logs()
+                                if (File.Exists(pathDest + @"\" + item))
                                 {
-                                    Path = pathFrom + item,
-                                    Data = DateTime.Now,
-                                    Hostname = Environment.MachineName
-                                };
+                                    File.Copy(pathFrom + @"\" + item, pathDest + item, true);
 
-                                col.Insert(log);
+                                    using var db = new LiteDatabase(PathUtil.Items.DataBase);
+
+                                    var col = db.GetCollection<Logs>("logs");
+
+                                    var log = new Logs()
+                                    {
+                                        Path = pathFrom + item,
+                                        Data = DateTime.Now,
+                                        Hostname = Environment.MachineName
+                                    };
+
+                                    col.Insert(log);
+
+                                }
+
+                                timerBar.Start();
 
                             }
-
-                            timerBar.Start();
-
                         }
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Sem pastas de destino");
                 }
             }
             else
@@ -164,8 +171,11 @@ namespace Repli
 
                 LoadListFolder();
             }
+            else
+            {
+                MessageBox.Show("Selecione uma pasta!");
+            }
 
-            MessageBox.Show("Selecione uma pasta!");
         }
 
         private void timerBar_Tick(object sender, EventArgs e)

@@ -17,9 +17,10 @@ namespace Repli
         public FormLogs()
         {
             InitializeComponent();
+            Logs_Load();
         }
 
-        private void FormLogs_Load(object sender, EventArgs e)
+        private void Logs_Load()
         {
             using var db = new LiteDatabase(PathUtil.Items.DataBase);
             
