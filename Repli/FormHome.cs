@@ -44,7 +44,7 @@ namespace Repli
                     {
                         if (clbServer.GetItemChecked(i))
                         {
-                            string pathFrom = (string)txtPath.Text;
+                            string pathFrom = txtPath.Text;
                             string pathDest = (string)clbServer.Items[i];
 
                             var subDirectories = GetSubDirectoriesAndFiles(pathFrom);
