@@ -7,6 +7,6 @@
     <ApplicationIcon>repli.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LiteDB" Version="4.1.4" />
+    <PackageReference Include="LiteDB" Version="5.0.13" />
   </ItemGroup>
 </Project>
